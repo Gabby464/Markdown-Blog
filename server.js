@@ -9,15 +9,7 @@ app.get('/', (req, res) => {
         title: 'test',
         createdAt: Date.now(),
         description: 'test description'
-    },{
-        title: 'test',
-        createdAt: Date.now(),
-        description: 'test description'
-    },{
-        title: 'test',
-        createdAt: Date.now(),
-        description: 'test description'
     }]
-    res.render('index', {articles: articles})
+    res.render('index', {articles: 'Hello home'})
 })
 app.listen(5000)
