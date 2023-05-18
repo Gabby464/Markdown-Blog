@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 const articleSchema = new mongoose.Schema({
   title: {
     required: true, 
@@ -14,7 +13,7 @@ const articleSchema = new mongoose.Schema({
     required: true, 
   },
   createdAt: {
-    type: Date,
+    type: String,
     default: () => new Date().toLocaleDateString(),
   }
 
