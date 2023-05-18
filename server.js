@@ -8,6 +8,8 @@ const articleRouter = require("./routes/articles");
 const connectDB = require("./db/connect");
 const errorHandling = require("./middlewares/error-handling");
 const notFound = require("./middlewares/not-found");
+const renderMiddleware = require("./middlewares/render");
+const article = require("./models/article");
 require("dotenv").config();
 
 //set view engine
@@ -15,16 +17,15 @@ app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 //access all params from the article form
 app.use("/articles", articleRouter);
-app.get("/", (req, res) => {
-    const articles = [
-      {
-        title: "test",
-        createdAt: new Date().toLocaleDateString(),
-        description: "test description",
-      },
-    ];
-    res.render("articles/index", { articles: articles });
-  });
+//middleware
+app.use(renderMiddleware)
+app.get("/", async (req, res) => {
+    const articles = await article.find({}).sort({
+        createdAt: "desc"
+    });
+    res.render("articles/index", { articles: articles});
+});
+
 //error middleware
 app.use(notFound)
 app.use(errorHandling);
