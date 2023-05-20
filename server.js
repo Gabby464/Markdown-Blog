@@ -41,6 +41,7 @@ app.use(notFound);
 app.use(errorHandling);
 
 const start = async () => {
+  console.log('the error is here')
   await connectDB(process.env.MONGO_URI);
   app.listen(port, console.log("Server is listening on port 5000"));
 };
