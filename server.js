@@ -10,15 +10,18 @@ const errorHandling = require("./middlewares/error-handling");
 const notFound = require("./middlewares/not-found");
 const renderMiddleware = require("./middlewares/render");
 const article = require("./models/article");
+const methodOverride = require('method-override')
 require("dotenv").config();
 
 //set view engine
 app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method'))
 app.set("view engine", "ejs");
 //access all params from the article form
 app.use("/articles", articleRouter);
 //middleware
-app.use(renderMiddleware)
+
+ // delete button will be in a form el and method's gonna be delete
 app.get("/", async (req, res) => {
     const articles = await article.find({}).sort({
         createdAt: "desc"
