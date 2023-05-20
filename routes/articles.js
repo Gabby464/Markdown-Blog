@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     const articles = await Article.find({});
-    console.log(articles)
     res.render("articles/index", { articles: articles});
 });
 
@@ -12,8 +11,8 @@ router.get("/new", (req, res) => {
   res.render("articles/new", { article: new Article() });
 });
 
-router.get("/:id", async (req, res) => {
-  const article = await Article.findById(req.params.id);
+router.get("/:slug", async (req, res) => {
+  const article = await Article.findOne({slug: req.params.slug});
   if (!article) {
     throw new Error();
   }
@@ -28,6 +27,11 @@ router.post("/", async (req, res) => {
     markdown: req.body.markdown,
   });
   await article.save();
-  res.redirect(`/articles/${article.id}`);
+  res.redirect(`/articles/${article.slug}`);
 });
+
+router.delete('/:id', async(req, res)=> {
+    await Article.findByIdAndDelete(req.params.id);
+    res.redirect('/')
+})
 module.exports = router;
