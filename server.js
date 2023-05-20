@@ -17,7 +17,7 @@ const errorHandling = require("./middlewares/error-handling");
 const notFound = require("./middlewares/not-found");
 
 const app = express();
-
+const port = process.env.PORT || 5000
 // Set view engine
 app.set("view engine", "ejs");
 
@@ -42,7 +42,7 @@ app.use(errorHandling);
 
 const start = async () => {
   await connectDB(process.env.MONGO_URI);
-  app.listen(5000, console.log("Server is listening on port 5000"));
+  app.listen(port, console.log("Server is listening on port 5000"));
 };
 
 start();
